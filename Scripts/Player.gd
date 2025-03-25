@@ -12,7 +12,7 @@ func _physics_process(delta: float) -> void:
 	horizontal_movement()
 	if !is_attacking:
 		player_animations()
-	# move_and_slide()
+	move_and_slide()
 
 func horizontal_movement() -> void:
 	var horizontal_input = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -22,9 +22,13 @@ func player_animations() -> void:
 	if Input.is_action_pressed("ui_left") || Input.is_action_just_released("ui_jump"):
 		$AnimatedSprite2D.flip_h = true
 		$AnimatedSprite2D.play("run")
+		$CollisionShape2D.position.x = 7
+		
 	if Input.is_action_pressed("ui_right") || Input.is_action_just_released("ui_jump"):
 		$AnimatedSprite2D.flip_h = false
 		$AnimatedSprite2D.play("run")
+		$CollisionShape2D.position.x = -7
+		
 	if !Input.is_anything_pressed():
 		$AnimatedSprite2D.play("idle")
 	
