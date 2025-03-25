@@ -15,6 +15,10 @@ run/main_scene="uid://dl5v8lwrlb26i"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Global="*res://Scripts/Global.gd"
+
 [display]
 
 window/size/mode=2

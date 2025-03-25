@@ -4,13 +4,11 @@ extends CharacterBody2D
 @export var gravity = 200
 @export var jump_height = -100
 
-var is_attacking = false
-var is_clibming = false
 
 func _physics_process(delta: float) -> void:
 	velocity.y += gravity * delta
 	horizontal_movement()
-	if !is_attacking:
+	if !Global.is_attacking and !Global.is_climbing:
 		player_animations()
 	move_and_slide()
 
@@ -35,22 +33,23 @@ func player_animations() -> void:
 # singular input captures
 func _input(event):
 	if event.is_action_pressed("ui_attack"):
-		is_attacking = true
+		Global.is_attacking = true
 		$AnimatedSprite2D.play("attack")
 	
 	if event.is_action_pressed("ui_jump") and is_on_floor():
 		velocity.y = jump_height
 		$AnimatedSprite2D.play("jump")
 
-	if is_clibming:
-		if event.is_action_pressed("ui_climb"):
+	if Global.is_climbing:
+		if event.is_action_pressed("ui_up"):
 			$AnimatedSprite2D.play("climb")
 			gravity = 100
 			velocity.y = -200
 		else:
 			gravity = 200
-			is_clibming = false	
+			# Global.is_climbing = false	
 
 
 func _on_animated_sprite_2d_animation_finished() -> void:
-	is_attacking = false
+	Global.is_attacking = false
+	Global.is_climbing = false
